@@ -1,0 +1,71 @@
+Chapter 1 
+
+Understand computer architecture, for a single CPU, understand what's going on inside and its memory.
+
+1.1 Von Neumann Architecture
+
+a design with an undivided memory that stores both program and data, a processing unit that executes the instructions, operating on the data in 'fetch, execute, store cycle'.
+contemporary CPUs operate on several instructions simultaneously, 'in flight'.
+
+1.2 Modern processors
+
+Floating point units, units dealing with floating point data
+Pipelining, the floating point add and multiply units of a processor are pipelined, which has the effect that a stream of independent operations can be performed simultaneously.
+
+Pipelines, the floating point add and multiply units of a processor are pipelined. That means a stream of independent operations can be performed at an asymptotic speed of one result per clock cycle. After the first operation, keep all the stage or segment operators 'busy' is the key point of pipelines.
+
+Peak performance = the clock speed ℅ the number of independent FPUs.
+
+Superscalar processing, processors can execute more than one instructions at a time, execute instructions in parallel that do not depend on each other.
+
+1.3 Memory Hierarchies
+
+Memory wall, the memory is too slow to load data into the process at the rate the processor can absorb it.
+
+The registers, the caches, together called the memory hierarchy
+Busses, the wires that move data around in a computer, from memory to CPU or to a disc controller or screen, also called 'north bridge'.
+
+Latency, the delay between the processor issuing a request for a memory item and the item actually arriving.
+Bandwidth, the rate at which data arrives at its destination after the initial latency is overcome.
+Register, a small amount of memory that is internal to the processor. It has a high bandwidth and low latency. You can keep some variable in registers to avoid the time requesting data from memory.
+Caches, in between the registers, which contain the immediate input and output data for instructions, where data can be kept for an intermediate amount of time. 
+
+Prefetch streams 
+These cache lines are now brought from memory well before they are needed, it can eliminate the latency for all but the first couple of data items.
+
+Concurrency and memory tranfer
+concurrency = bandwidth ℅ latency
+
+Virtual memory
+if more memory is needed than is available, certain blocks of memory are written to disc which acts as an extension of the real memory, called virtual memory.
+
+TLB translation look-aside buffer
+TLB is a cache of frequently used page table entries, it provides fast address translation for a number of pages.
+
+Problem: When some parts of the disc acts as the virtual memory, will it slow down the speed of operations? Since fetching data from disc is much slower than from memory. Also I am wondering how will the data go from disc to registers.
+
+Exercise 1 
+
+non-pipelined case
+
+t(n) = [s+l*n]*而
+r(n) = n/[s+l*n]/而
+when n goes to infinity r(n) = (l*而)^-1
+
+pipelined case
+
+t(n) = [s+l+n-1]*而
+r(n) = n/[s+1+n-1]/而
+when n goes to infinity r(n) = 而^-1
+
+
+
+
+
+
+
+
+
+
+
+
