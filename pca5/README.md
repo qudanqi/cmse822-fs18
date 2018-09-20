@@ -15,4 +15,8 @@ _None_ for this pre-class.
 
 ## What to turn-in
 
+<<<<<<< HEAD
 Commit your write-up, including review and questions, as a plain text, markdown document, or pdf to your assignment repo _before the start of class_.
+=======
+Commit your write-up, including review and questions, as a plain text, markdown document, or pdf to your assignment repo _before the start of class_.
+>>>>>>> 01783fb47145fa42081d412188feaa7b19c62adc
