@@ -1,17 +1,18 @@
 /***************************************************************************
  * FILE: ser_pi_calc.c
- * DESCRIPTION:  
+ * DESCRIPTION:
  *   Serial pi Calculation - C Version
  *   This program calculates pi using a "dartboard" algorithm.  See
  *   Fox et al.(1988) Solving Problems on Concurrent Processors, vol.1
- *   page 207.  
+ *   page 207.
  * AUTHOR: unknown
  * REVISED: 02/23/12 Blaise Barney
 ***************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
+#include "mpi.h"
 
-void srandom (unsigned seed);  
+void srandom (unsigned seed);
 double dboard (int darts);
 
 #define DARTS 10000   	/* number of throws at dartboard */
@@ -21,19 +22,27 @@ int main(int argc, char *argv[])
 {
 double pi;          	/* average of pi after "darts" is thrown */
 double avepi;       	/* average pi value for all iterations */
+double t1, t2, t;     /* calulate the walltime*/
 int i, n;
-
 printf("Starting serial version of pi calculation using dartboard algorithm...\n");
 srandom (5);            /* seed the random number generator */
 avepi = 0;
 for (i = 0; i < ROUNDS; i++) {
    /* Perform pi calculation on serial processor */
+
+   MPI_Init(NULL,NULL);
+   t1 = MPI_Wtime();
    pi = dboard(DARTS);
-   avepi = ((avepi * i) + pi)/(i + 1); 
+   t2 = MPI_Wtime();
+   t = t2 - t1;
+   MPI_Finalize();
+
+   avepi = ((avepi * i) + pi)/(i + 1);
    printf("   After %3d throws, average value of pi = %10.8f\n",
          (DARTS * (i + 1)),avepi);
-   }    
+   }
 printf("\nReal value of PI: 3.1415926535897 \n");
+
 }
 
 
@@ -50,7 +59,11 @@ double dboard(int darts)
           pi,            /* pi  */
           r;             /* random number scaled between 0 and 1  */
    int score,            /* number of darts that hit circle */
+       totalscore,
+       current_process,
        n;
+   MPI_Comm comm;
+   comm = MPI_COMM_WORLD;
    unsigned int cconst;  /* must be 4-bytes in size */
 /*************************************************************************
  * The cconst variable must be 4 bytes. We check this and bail if it is
@@ -85,8 +98,11 @@ double dboard(int darts)
       if ((sqr(x_coord) + sqr(y_coord)) <= 1.0)
          score++;
       }
-
+  MPI_Reduce(&score, &totalscore, 1, MPI_INT, MPI_SUM, 0, comm);
+  MPI_Comm_rank(comm, &current_process);
    /* calculate pi */
-   pi = 4.0 * (double)score/(double)darts;
+   if (current_process == 0){
+   pi = 4.0 * (double)totalscore/(double)darts/4.0;
    return(pi);
-} 
+ }
+}
