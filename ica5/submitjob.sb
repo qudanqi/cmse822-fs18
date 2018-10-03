@@ -11,7 +11,14 @@
 ########## Command Lines to Run ##########
 
 cd $SLURM_SUBMIT_DIR                   ### change to the directory where your code is located
+<<<<<<< HEAD
 
 srun -n 4 a.out             ### call your executable
 
 scontrol show job $SLURM_JOB_ID     ### write job information to output file
+=======
+ 
+srun -n 4 a.out             ### call your executable
+ 
+scontrol show job $SLURM_JOB_ID     ### write job information to output file
+>>>>>>> 67f17ffcf6417ff886e7b23a7f1cd622eded79f3
