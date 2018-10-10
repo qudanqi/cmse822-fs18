@@ -1,0 +1,8 @@
+
+
+
+You need to try larger N in order to see the structure from the cache sizes
+
+Your code doesn't match up with your plot? You only have 9 n in your code, but show many for your plot?
+
+At the N you show in your plot, its not compute bound but bound by the bandwidth of your caches
